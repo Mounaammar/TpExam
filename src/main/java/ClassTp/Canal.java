@@ -2,6 +2,7 @@ package ClassTp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +28,32 @@ public class Canal implements Destinataire , Comparable<Canal>{
 		historiques=new ArrayList<Message>();
 		
 	}
-		public void ecrireMessage(Utilisateur u,Message m) {
-            
-			historiques.add(m);
+		public void ecrireMessage(Utilisateur u,Message m) throws ActionNonAutoriseeException {
+			Role roleKey = null;
+			boolean b=false;
+			boolean b2=false;
+			Iterator iteratorUser = mapping_role_utilisateurs.entrySet().iterator();
+			Iterator iteratorDroit = mapping_role_habilitations.entrySet().iterator();
+			 while (iteratorUser.hasNext()||b==false) {
+		          Map.Entry mapentry = (Map.Entry) iteratorUser.next();
+		          if(mapentry.getValue()==u) {
+		        	 b=true;
+		        	 roleKey=(Role) mapentry.getKey();	
+		          }
+		          
+			 }if(b==true);
+			 while (iteratorDroit.hasNext()||b2==false) {
+		          Map.Entry mapentry = (Map.Entry) iteratorDroit.next();
+		          if(mapentry.getKey()==roleKey) {
+		        	 
+		        	 b2=true;
+		          }
+			
+		} if(b2==true)
+			 historiques.add(m);
+	          else throw new ActionNonAutoriseeException("vous avez pas le droit d ecrire dans ce canal");
+		
 		}
-
 		public int compareTo(Canal c) {
 			
 			return Integer.compare(ordre, c.ordre);
@@ -47,7 +69,7 @@ public class Canal implements Destinataire , Comparable<Canal>{
 		public Map<Role,List<Habilitation>> getMapping_role_habilitations() {
 			// TODO Auto-generated method stub
 			return mapping_role_habilitations;
-		}}
+		}
 
          //getter et setter de nom et ordre
          public String getNom() {

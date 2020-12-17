@@ -1,8 +1,19 @@
 package AppTest;
 
+import static org.junit.Assert.fail;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Test;
 
+import ClassTp.ActionNonAutoriseeException;
 import ClassTp.Canal;
+import ClassTp.Habilitation;
+import ClassTp.Message;
+import ClassTp.Role;
+import ClassTp.Utilisateur;
 
 public class CanalTest {
 	     @Test
@@ -15,8 +26,8 @@ public class CanalTest {
 	        m.setTexte("Bonne fêtes de fin d'année !");
 
 	        Utilisateur utilisateur = new Utilisateur();
-	        c.getMapping_role_utilisateurs().put(new Rôle("Membre"), Arrays.asList(utilisateur));
-	        c.getMapping_role_habilitations().put(new Rôle("Membre"), Arrays.asList(Habilitation.ECRITURE));
+	        c.getMapping_role_utilisateurs().put(new Role("Membre"), Arrays.asList(utilisateur));
+	        c.getMapping_role_habilitations().put(new Role("Membre"), Arrays.asList(Habilitation.ECRITURE));
 
 	        // Etape 2 : appel de la méthode testée
 	        c.ecrireMessage(utilisateur, m);
@@ -50,4 +61,6 @@ public class CanalTest {
 	            // Etape 3 test du retour = si on arrive ici, le test est concluant
 	        }
 	    }
+	    
+	    
 }
